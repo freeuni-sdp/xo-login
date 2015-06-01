@@ -3,7 +3,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>ge.edu.freeuni.sdp.todo.core</groupId>
+	<groupId>ge.edu.freeuni.sdp.xo</groupId>
 	<artifactId>xo-login</artifactId>
 	<packaging>war</packaging>
 	<version>1.0</version>
