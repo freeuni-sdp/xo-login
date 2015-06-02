@@ -1,1 +1,6 @@
 language: java
+
+deploy:
+   provider: heroku
+   api_key: "df68945c-5989-4e35-a359-7e4db8884b40"
+   app: xo-login
