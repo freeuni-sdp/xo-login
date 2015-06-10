@@ -3,18 +3,20 @@ HOST: http://xo-login.herokuapp.com/
 
 # xo_login Api
 
-xo_login is a simple API allowing consumers to login using their username and password.
-
+xo_login is a simple API allowing consumers to login using their username and password,
+adding user, finding user by username and checking if token is valid. 
 # xo-login API Root [/]
 
 
-## Login user [GET]
+## Login user [PUT]
 
 Request contains username and password and with this credentials
-2 types of responses are returned:
+3 types of responses are returned:
 1) Response 200, which is returned in case user is registered in the system 
-   and response json contains token
-2) Response 401, which is returned and indicates, that user is not registered.
+   And system already contains some token about this user, which is updated
+2) Response 201, which is returned If user is loging in the system for the 
+   first time. New token is created and reaturned
+3) Response 401, which is returned and indicates, that user is not registered
 
 + username (string) - name of the user
 + password (string) - password of the user
@@ -34,6 +36,61 @@ Request contains username and password and with this credentials
             {
                 "token":"7b5be1f4-78f9-4e32-8b75-a7e87afec329"
             }
+            
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                "token":"7b5be1f4-78f9-4e32-8b75-a7e87afec329"
+            }
 
 + Response 401 (application/json)
 
+## Get username by token [GET/{token}]
+Returns username by token if found
+
+
++ Parameters
+    + token (required, string, `"0b3211d3-76c6-456d-8971-20aa277bfc76"`)
+
++ Response 200 (application/json)
+
+                {
+                    "username":"Anna"
+                }
+
++ Response 404 (application/json)
+
+## Create a new user [POST/users]
+
++ username (string) - name of the user
++ password (string) - password of the user
++ email (string) - email of the user
+
++ Request (application/json)
+
+            {
+                "username":"Sandro",
+                "password":"qwerty",
+                "email":"sandro@gmail.com"
+            }
+
++ Response 201 (application/json)
+
++ Response 404 (application/json)
+
+## Get user by id [GET/users/{username}]
+Returns user password and email if found
+
++ Parameters
+    + username (required, string, `"Sandro"`)
+
++ Response 200 (application/json)
+
+                {
+                    "password":"qwerty",
+                    "email":"sandro@gmail.com"
+                }
+
++ Response 404 (application/json)
