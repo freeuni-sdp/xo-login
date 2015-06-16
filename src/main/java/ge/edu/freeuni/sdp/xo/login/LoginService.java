@@ -55,7 +55,7 @@ public class LoginService {
 	}
 	
 	
-	@PUT
+	@GET
 	public Token loginUser(LoginInformation userInfo){
 		if(userInfo.password == null || userInfo.username == null){
 			throw new WebApplicationException(Status.BAD_REQUEST);
