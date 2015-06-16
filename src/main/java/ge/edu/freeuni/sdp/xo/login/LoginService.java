@@ -7,6 +7,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import javax.ws.rs.core.Response.Status;
 
+@Path("/")
 @Consumes( { MediaType.APPLICATION_JSON})
 @Produces( { MediaType.APPLICATION_JSON})
 public class LoginService {
@@ -55,7 +56,6 @@ public class LoginService {
 	
 	
 	@PUT
-	@Path("/")
 	public Token loginUser(LoginInformation userInfo){
 		if(userInfo.password == null || userInfo.username == null){
 			throw new WebApplicationException(Status.BAD_REQUEST);
@@ -67,8 +67,7 @@ public class LoginService {
 		return currentToken;
 	}
 	
-	@GET
-	@Path("/{token}")
+	@GET @Path("/{token}")
 	public UserName getUserByToken(@PathParam("token") String token){ 
 		UserName currentUser = tokenCheck.get(token);
 		if (currentUser == null){
@@ -78,8 +77,7 @@ public class LoginService {
 	}
 	
 	
-	@POST
-	@Path("/users")
+	@POST @Path("/users")
 	public Response createUser(UserInformation user){
 		if(user.email == null || user.password == null || user.username == null){
 			return Response.status(Status.BAD_REQUEST).build();
@@ -88,8 +86,7 @@ public class LoginService {
 	}
 	
 	
-	@GET
-	@Path("/users/{username}")
+	@GET @Path("/users/{username}")
 	public UserInformation getUser(@PathParam("username") String userName){
 		UserInformation currentUser = users.get(userName);
 		if (currentUser == null){
