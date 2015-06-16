@@ -11,12 +11,13 @@ adding user, finding user by username and checking if token is valid.
 ## Login user [PUT]
 
 Request contains username and password and with this credentials
-3 types of responses are returned:
+4 types of responses are returned:
 1) Response 200, which is returned in case user is registered in the system 
    And system already contains some token about this user, which is updated
 2) Response 201, which is returned If user is loging in the system for the 
    first time. New token is created and reaturned
 3) Response 401, which is returned and indicates, that user is not registered
+4) Response 400, which is returned and indicates, that bad request was sent
 
 + username (string) - name of the user
 + password (string) - password of the user
@@ -46,6 +47,8 @@ Request contains username and password and with this credentials
             }
 
 + Response 401 (application/json)
+
++ Response 400 (application/json)
 
 ## Get username by token [GET/{token}]
 Returns username by token if found
@@ -78,9 +81,9 @@ Returns username by token if found
 
 + Response 201 (application/json)
 
-+ Response 404 (application/json)
++ Response 400 (application/json)
 
-## Get user by id [GET/users/{username}]
+## Get user by username [GET/users/{username}]
 Returns user password and email if found
 
 + Parameters
@@ -89,6 +92,7 @@ Returns user password and email if found
 + Response 200 (application/json)
 
                 {
+                    "username":"sandro",
                     "password":"qwerty",
                     "email":"sandro@gmail.com"
                 }
