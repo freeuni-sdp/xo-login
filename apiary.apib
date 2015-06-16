@@ -8,7 +8,7 @@ adding user, finding user by username and checking if token is valid.
 # xo-login API Root [/]
 
 
-## Login user [PUT]
+## Login user [PUT/login]
 
 Request contains username and password and with this credentials
 4 types of responses are returned:
@@ -50,7 +50,7 @@ Request contains username and password and with this credentials
 
 + Response 400 (application/json)
 
-## Get username by token [GET/{token}]
+## Get username by token [GET/login/{token}]
 Returns username by token if found
 
 
@@ -65,7 +65,7 @@ Returns username by token if found
 
 + Response 404 (application/json)
 
-## Create a new user [POST/users]
+## Create a new user [POST/login/users]
 
 + username (string) - name of the user
 + password (string) - password of the user
@@ -83,7 +83,7 @@ Returns username by token if found
 
 + Response 400 (application/json)
 
-## Get user by username [GET/users/{username}]
+## Get user by username [GET/login/users/{username}]
 Returns user password and email if found
 
 + Parameters
