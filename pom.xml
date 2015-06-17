@@ -70,7 +70,11 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-core</artifactId>
+				<version>1.10.19</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -126,6 +130,10 @@
 		</dependency>
 
 
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+		</dependency>
 	</dependencies>
 	<properties>
 		<jersey.version>2.17</jersey.version>
