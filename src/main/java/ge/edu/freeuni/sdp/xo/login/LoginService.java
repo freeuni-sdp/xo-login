@@ -15,7 +15,7 @@ public class LoginService {
 	
 	static HashMap<String, UserInformation> users = new HashMap<>();
 	static HashMap<String,UserName> tokenCheck = new HashMap<>();
-	static HashMap<LoginInformation,Token> loginCheck = new HashMap<>(); 
+	static HashMap<String,Token> loginCheck = new HashMap<>(); 
 	
 	{
 		UserInformation newUser = new UserInformation();
@@ -49,8 +49,8 @@ public class LoginService {
 		Token tokenAnna = new Token();
 		tokenAnna.token = "11111";
 		
-		loginCheck.put(loginSandro, tokenSandro);
-		loginCheck.put(loginAnna, tokenAnna);
+		loginCheck.put(loginSandro.toString(), tokenSandro);
+		loginCheck.put(loginAnna.toString(), tokenAnna);
 		
 	}
 	
@@ -60,7 +60,7 @@ public class LoginService {
 		if(userInfo.password == null || userInfo.username == null){
 			throw new WebApplicationException(Status.BAD_REQUEST);
 		}
-		Token currentToken = loginCheck.get(userInfo);
+		Token currentToken = loginCheck.get(userInfo.toString());
 		if(currentToken == null){
 			throw new WebApplicationException(Status.NOT_FOUND);
 		}

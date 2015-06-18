@@ -13,20 +13,17 @@ import org.mockito.Mockito;
 
 public class LoginServiceTest {
 	
-//	@Test
-//	public void testLoginRegisteredUser() {
-//		LoginService loginService = new LoginService();
-////		LoginInformation userInfo = Mockito.mock(LoginInformation.class);
-////		userInfo.username = "sandro";
-////		userInfo.password = "blabla";
-////		Token token = Mockito.mock(Token.class);
-////		token = loginService.loginUser(userInfo);
-////		assertEquals(token.token, "00000");
-//		LoginInformation loginSandro = new LoginInformation();
-//		loginSandro.username = "sandro";
-//		loginSandro.password = "blabla";
-//		loginService.loginUser(loginSandro);
-//	}
+	@Test
+	public void testLoginRegisteredUser() {
+		LoginService loginService = new LoginService();
+		LoginInformation userInfo = Mockito.mock(LoginInformation.class);
+		userInfo.username = "sandro";
+		userInfo.password = "blabla";
+		Mockito.when(userInfo.toString()).thenReturn("sandro, blabla");
+		Token token = Mockito.mock(Token.class);
+		token = loginService.loginUser(userInfo);
+		assertEquals(token.token, "00000");
+	}
 	
 
 	@Test(expected=WebApplicationException.class)
