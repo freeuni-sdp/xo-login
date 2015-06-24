@@ -1,30 +1,34 @@
-
-
 import static org.junit.Assert.*;
+
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
-import ge.edu.freeuni.sdp.xo.login.LoginInformation;
-import ge.edu.freeuni.sdp.xo.login.LoginService;
-import ge.edu.freeuni.sdp.xo.login.Token;
-import ge.edu.freeuni.sdp.xo.login.UserInformation;
-import ge.edu.freeuni.sdp.xo.login.UserName;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.*;
+
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.test.JerseyTest;
+
+import ge.edu.freeuni.sdp.xo.login.*;
+
 import org.junit.Test;
 import org.mockito.Mockito;
 
-public class LoginServiceTest {
-	
+public class LoginServiceTest extends JerseyTest {
+
+	@Override
+	protected Application configure() {
+		return new ResourceConfig(LoginService.class);
+	}
+
 	@Test
 	public void testLoginRegisteredUser() {
-		LoginService loginService = new LoginService();
-		LoginInformation userInfo = Mockito.mock(LoginInformation.class);
-		userInfo.username = "sandro";
-		userInfo.password = "blabla";
-		Mockito.when(userInfo.toString()).thenReturn("sandro, blabla");
-		Token token = Mockito.mock(Token.class);
-		token = loginService.loginUser(userInfo);
-		assertEquals(token.token, "00000");
+		LoginInformation loginInfo = new LoginInformation();
+		loginInfo.username = "sandro";
+		loginInfo.password = "blabla";
+
+		Token actualToken = target("/login").request().put(Entity.entity(loginInfo, MediaType.APPLICATION_JSON_TYPE)).readEntity(Token.class);;
+		assertFalse(actualToken.token.isEmpty());
 	}
-	
+
 
 	@Test(expected=WebApplicationException.class)
 	public void testLoginUserPasswordNull() {
@@ -36,7 +40,7 @@ public class LoginServiceTest {
 		token = loginService.loginUser(userInfo);
 		assertEquals(token, null);
 	}
-	
+
 	@Test(expected=WebApplicationException.class)
 	public void testLoginUserUsernameNull() {
 		LoginService loginService = new LoginService();
@@ -47,7 +51,7 @@ public class LoginServiceTest {
 		token = loginService.loginUser(userInfo);
 		assertEquals(token, null);
 	}
-	
+
 	@Test(expected=WebApplicationException.class)
 	public void testLoginUserPasswordIncorrect() {
 		LoginService loginService = new LoginService();
@@ -58,7 +62,7 @@ public class LoginServiceTest {
 		token = loginService.loginUser(userInfo);
 		assertEquals(token, null);
 	}
-	
+
 	@Test(expected=WebApplicationException.class)
 	public void testLoginUserUsernameIncorrect() {
 		LoginService loginService = new LoginService();
@@ -72,9 +76,7 @@ public class LoginServiceTest {
 
 	@Test
 	public void testGetUserByTokenRegistered() {
-		LoginService loginService = new LoginService();
-		UserName userName = Mockito.mock(UserName.class);
-		userName = loginService.getUserByToken("00000");
+		UserName userName = target("/login/00000").request().get().readEntity(UserName.class);;
 		assertEquals(userName.username, "sandro");
 	}
 
@@ -85,7 +87,7 @@ public class LoginServiceTest {
 		userName = loginService.getUserByToken("00001");
 		assertEquals(userName, null);
 	}
-	
+
 	@Test
 	public void testCreateUser() {
 		LoginService loginService = new LoginService();
@@ -97,7 +99,7 @@ public class LoginServiceTest {
 		response = loginService.createUser(user);
 		assertEquals(response.getStatus(), Response.Status.CREATED.getStatusCode());
 	}
-	
+
 	@Test
 	public void testCreateUserUsernameNull() {
 		LoginService loginService = new LoginService();
@@ -109,7 +111,7 @@ public class LoginServiceTest {
 		response = loginService.createUser(user);
 		assertEquals(response.getStatus(), Response.Status.BAD_REQUEST.getStatusCode());
 	}
-	
+
 	@Test
 	public void testCreateUserPasswordNull() {
 		LoginService loginService = new LoginService();
@@ -121,7 +123,7 @@ public class LoginServiceTest {
 		response = loginService.createUser(user);
 		assertEquals(response.getStatus(), Response.Status.BAD_REQUEST.getStatusCode());
 	}
-	
+
 	@Test
 	public void testCreateUserEmailNull() {
 		LoginService loginService = new LoginService();
@@ -143,7 +145,7 @@ public class LoginServiceTest {
 		assertEquals(userInfo.password, "blabla");
 		assertEquals(userInfo.email, "agoro12@freeuni.edu.ge");
 	}
-	
+
 	@Test(expected=WebApplicationException.class)
 	public void testGetUserNotRegistered() {
 		LoginService loginService = new LoginService();
