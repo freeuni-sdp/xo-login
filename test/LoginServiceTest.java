@@ -95,7 +95,7 @@ public class LoginServiceTest {
 		user.email = "giorgi@freeuni.edu.ge";
 		Response response = Mockito.mock(Response.class);
 		response = loginService.createUser(user);
-		assertEquals(response.getStatus(), 201);
+		assertEquals(response.getStatus(), Response.Status.CREATED.getStatusCode());
 	}
 	
 	@Test
@@ -107,7 +107,7 @@ public class LoginServiceTest {
 		user.email = "giorgi@freeuni.edu.ge";
 		Response response = Mockito.mock(Response.class);
 		response = loginService.createUser(user);
-		assertEquals(response.getStatus(), 400);
+		assertEquals(response.getStatus(), Response.Status.BAD_REQUEST.getStatusCode());
 	}
 	
 	@Test
@@ -119,7 +119,7 @@ public class LoginServiceTest {
 		user.email = "giorgi@freeuni.edu.ge";
 		Response response = Mockito.mock(Response.class);
 		response = loginService.createUser(user);
-		assertEquals(response.getStatus(), 400);
+		assertEquals(response.getStatus(), Response.Status.BAD_REQUEST.getStatusCode());
 	}
 	
 	@Test
@@ -131,7 +131,7 @@ public class LoginServiceTest {
 		user.email = null;
 		Response response = Mockito.mock(Response.class);
 		response = loginService.createUser(user);
-		assertEquals(response.getStatus(), 400);
+		assertEquals(response.getStatus(), Response.Status.BAD_REQUEST.getStatusCode());
 	}
 
 	@Test
