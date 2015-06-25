@@ -16,7 +16,7 @@ Request contains username and password and with this credentials
    And system already contains some token about this user, which is updated
 2) Response 201, which is returned If user is loging in the system for the 
    first time. New token is created and reaturned
-3) Response 401, which is returned and indicates, that user is not registered
+3) Response 422, which is returned and indicates, that user is not registered
 4) Response 400, which is returned and indicates, that bad request was sent
 
 + username (string) - name of the user
@@ -46,7 +46,7 @@ Request contains username and password and with this credentials
                 "token":"7b5be1f4-78f9-4e32-8b75-a7e87afec329"
             }
 
-+ Response 401 (application/json)
++ Response 422 (application/json)
 
 + Response 400 (application/json)
 

@@ -1,9 +1,8 @@
-
-
 import static org.junit.Assert.*;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.client.Entity;
+<<<<<<< HEAD
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -46,6 +45,35 @@ public class LoginServiceTest extends JerseyTest{
 		userInfo.password = "blabla";
 		Mockito.when(userInfo.toString()).thenReturn("sandro, blabla");
 	}
+=======
+import javax.ws.rs.core.*;
+
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.test.JerseyTest;
+
+import ge.edu.freeuni.sdp.xo.login.*;
+
+import org.junit.Test;
+import org.mockito.Mockito;
+
+public class LoginServiceTest extends JerseyTest {
+
+	@Override
+	protected Application configure() {
+		return new ResourceConfig(LoginService.class);
+	}
+
+	@Test
+	public void testLoginRegisteredUser() {
+		LoginInformation loginInfo = new LoginInformation();
+		loginInfo.username = "sandro";
+		loginInfo.password = "blabla";
+
+		Token actualToken = target("/login").request().put(Entity.entity(loginInfo, MediaType.APPLICATION_JSON_TYPE)).readEntity(Token.class);;
+		assertFalse(actualToken.token.isEmpty());
+	}
+
+>>>>>>> 5c13e68eeef367b494e724470ec9455f365e7bc6
 
 	@Test(expected=WebApplicationException.class)
 	public void testLoginUserPasswordNull() {
@@ -57,7 +85,7 @@ public class LoginServiceTest extends JerseyTest{
 		token = loginService.loginUser(userInfo);
 		assertEquals(token, null);
 	}
-	
+
 	@Test(expected=WebApplicationException.class)
 	public void testLoginUserUsernameNull() {
 		LoginService loginService = new LoginService();
@@ -68,7 +96,7 @@ public class LoginServiceTest extends JerseyTest{
 		token = loginService.loginUser(userInfo);
 		assertEquals(token, null);
 	}
-	
+
 	@Test(expected=WebApplicationException.class)
 	public void testLoginUserPasswordIncorrect() {
 		LoginService loginService = new LoginService();
@@ -79,7 +107,7 @@ public class LoginServiceTest extends JerseyTest{
 		token = loginService.loginUser(userInfo);
 		assertEquals(token, null);
 	}
-	
+
 	@Test(expected=WebApplicationException.class)
 	public void testLoginUserUsernameIncorrect() {
 		LoginService loginService = new LoginService();
@@ -93,9 +121,7 @@ public class LoginServiceTest extends JerseyTest{
 
 	@Test
 	public void testGetUserByTokenRegistered() {
-		LoginService loginService = new LoginService();
-		UserName userName = Mockito.mock(UserName.class);
-		userName = loginService.getUserByToken("00000");
+		UserName userName = target("/login/00000").request().get().readEntity(UserName.class);;
 		assertEquals(userName.username, "sandro");
 	}
 	
@@ -118,7 +144,7 @@ public class LoginServiceTest extends JerseyTest{
 		userName = loginService.getUserByToken("00001");
 		assertEquals(userName, null);
 	}
-	
+
 	@Test
 	public void testCreateUser() {
 		LoginService loginService = new LoginService();
@@ -130,7 +156,7 @@ public class LoginServiceTest extends JerseyTest{
 		response = loginService.createUser(user);
 		assertEquals(response.getStatus(), Response.Status.CREATED.getStatusCode());
 	}
-	
+
 	@Test
 	public void testCreateUserUsernameNull() {
 		LoginService loginService = new LoginService();
@@ -142,7 +168,7 @@ public class LoginServiceTest extends JerseyTest{
 		response = loginService.createUser(user);
 		assertEquals(response.getStatus(), Response.Status.BAD_REQUEST.getStatusCode());
 	}
-	
+
 	@Test
 	public void testCreateUserPasswordNull() {
 		LoginService loginService = new LoginService();
@@ -154,7 +180,7 @@ public class LoginServiceTest extends JerseyTest{
 		response = loginService.createUser(user);
 		assertEquals(response.getStatus(), Response.Status.BAD_REQUEST.getStatusCode());
 	}
-	
+
 	@Test
 	public void testCreateUserEmailNull() {
 		LoginService loginService = new LoginService();
@@ -216,7 +242,7 @@ public class LoginServiceTest extends JerseyTest{
 		assertEquals(userInfo.password, "blabla");
 		assertEquals(userInfo.email, "agoro12@freeuni.edu.ge");
 	}
-	
+
 	@Test(expected=WebApplicationException.class)
 	public void testGetUserNotRegistered() {
 		LoginService loginService = new LoginService();
