@@ -33,6 +33,33 @@ public class LoginServiceTest extends JerseyTest{
 		Token actualToken = target("/login").request().put(Entity.entity(loginInfo, MediaType.APPLICATION_JSON_TYPE)).readEntity(Token.class);;
 		assertFalse(actualToken.token.isEmpty());
 	}
+	
+	@Test
+	public void testLoginRegisteredUser200Expected() {
+		LoginInformation loginInfo = new LoginInformation();
+		loginInfo.username = "sandro";
+		loginInfo.password = "blabla";
+		Response actual = target("/login").request().put(Entity.entity(loginInfo, MediaType.APPLICATION_JSON_TYPE));
+        assertEquals(Response.Status.OK.getStatusCode(), actual.getStatus());
+	}
+	
+	@Test
+	public void testLoginNotRegisteredUser422Expected() {
+		LoginInformation loginInfo = new LoginInformation();
+		loginInfo.username = "giorgi";
+		loginInfo.password = "blabla";
+		Response actual = target("/login").request().put(Entity.entity(loginInfo, MediaType.APPLICATION_JSON_TYPE));
+        assertEquals(422, actual.getStatus());
+	}
+	
+	@Test
+	public void testLoginUser400Expected() {
+		LoginInformation loginInfo = new LoginInformation();
+		loginInfo.username = "giorgi";
+		loginInfo.password = null;
+		Response actual = target("/login").request().put(Entity.entity(loginInfo, MediaType.APPLICATION_JSON_TYPE));
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), actual.getStatus());
+	}
 
 	@Test(expected=WebApplicationException.class)
 	public void testLoginUserPasswordNull() {
