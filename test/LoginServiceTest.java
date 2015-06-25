@@ -2,7 +2,6 @@ import static org.junit.Assert.*;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.client.Entity;
-<<<<<<< HEAD
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -26,44 +25,6 @@ public class LoginServiceTest extends JerseyTest{
 	 }
 	
 	@Test
-	public void testLoginRegisteredUser(){
-		LoginService loginService = new LoginService();
-		LoginInformation userInfo = Mockito.mock(LoginInformation.class);
-		userInfo.username = "sandro";
-		userInfo.password = "blabla";
-		Mockito.when(userInfo.toString()).thenReturn("sandro, blabla");
-		Token token = Mockito.mock(Token.class);
-		token = loginService.loginUser(userInfo);
-		assertEquals(token.token, "00000");
-	}
-	
-	@Test
-	public void testLoginRegisteredUser200Expected(){
-		
-		LoginInformation userInfo = new LoginInformation();
-		userInfo.username = "sandro";
-		userInfo.password = "blabla";
-		Mockito.when(userInfo.toString()).thenReturn("sandro, blabla");
-	}
-=======
-import javax.ws.rs.core.*;
-
-import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.test.JerseyTest;
-
-import ge.edu.freeuni.sdp.xo.login.*;
-
-import org.junit.Test;
-import org.mockito.Mockito;
-
-public class LoginServiceTest extends JerseyTest {
-
-	@Override
-	protected Application configure() {
-		return new ResourceConfig(LoginService.class);
-	}
-
-	@Test
 	public void testLoginRegisteredUser() {
 		LoginInformation loginInfo = new LoginInformation();
 		loginInfo.username = "sandro";
@@ -72,8 +33,6 @@ public class LoginServiceTest extends JerseyTest {
 		Token actualToken = target("/login").request().put(Entity.entity(loginInfo, MediaType.APPLICATION_JSON_TYPE)).readEntity(Token.class);;
 		assertFalse(actualToken.token.isEmpty());
 	}
-
->>>>>>> 5c13e68eeef367b494e724470ec9455f365e7bc6
 
 	@Test(expected=WebApplicationException.class)
 	public void testLoginUserPasswordNull() {
