@@ -1,20 +1,33 @@
 
 
 import static org.junit.Assert.*;
+
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.Application;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import ge.edu.freeuni.sdp.xo.login.LoginInformation;
 import ge.edu.freeuni.sdp.xo.login.LoginService;
 import ge.edu.freeuni.sdp.xo.login.Token;
 import ge.edu.freeuni.sdp.xo.login.UserInformation;
 import ge.edu.freeuni.sdp.xo.login.UserName;
+
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-public class LoginServiceTest {
+public class LoginServiceTest extends JerseyTest{
+	
+	@Override
+	 protected Application configure() {
+		 return new ResourceConfig(LoginService.class);
+	 }
 	
 	@Test
-	public void testLoginRegisteredUser() {
+	public void testLoginRegisteredUser(){
 		LoginService loginService = new LoginService();
 		LoginInformation userInfo = Mockito.mock(LoginInformation.class);
 		userInfo.username = "sandro";
@@ -25,6 +38,14 @@ public class LoginServiceTest {
 		assertEquals(token.token, "00000");
 	}
 	
+	@Test
+	public void testLoginRegisteredUser200Expected(){
+		
+		LoginInformation userInfo = new LoginInformation();
+		userInfo.username = "sandro";
+		userInfo.password = "blabla";
+		Mockito.when(userInfo.toString()).thenReturn("sandro, blabla");
+	}
 
 	@Test(expected=WebApplicationException.class)
 	public void testLoginUserPasswordNull() {
@@ -76,6 +97,18 @@ public class LoginServiceTest {
 		UserName userName = Mockito.mock(UserName.class);
 		userName = loginService.getUserByToken("00000");
 		assertEquals(userName.username, "sandro");
+	}
+	
+	@Test
+	public void testGetUserByToken200Expected() {
+		Response actual = target("/login/00000").request().get();
+		assertEquals(Response.Status.OK.getStatusCode(), actual.getStatus());
+	}
+	
+	@Test
+	public void testGetUserByToken404Expected() {
+		Response actual = target("/login/00001").request().get();
+		assertEquals(Response.Status.NOT_FOUND.getStatusCode(), actual.getStatus());
 	}
 
 	@Test(expected=WebApplicationException.class)
@@ -133,7 +166,47 @@ public class LoginServiceTest {
 		response = loginService.createUser(user);
 		assertEquals(response.getStatus(), Response.Status.BAD_REQUEST.getStatusCode());
 	}
-
+	
+	@Test
+	public void testCreateUser201Expected() {
+		UserInformation user = new UserInformation();
+		user.username = "Giorgi";
+		user.password = "blabla";
+		user.email = "giorgi@freeuni.edu.ge";
+        Response actual = target("/login/users").request().post(Entity.entity(user, MediaType.APPLICATION_JSON_TYPE));
+        assertEquals(Response.Status.CREATED.getStatusCode(), actual.getStatus());
+	}
+	
+	@Test
+	public void testCreateUserEmailNull404Expected() {
+		UserInformation user = new UserInformation();
+		user.username = "Giorgi";
+		user.password = "blabla";
+		user.email = null;
+        Response actual = target("/login/users").request().post(Entity.entity(user, MediaType.APPLICATION_JSON_TYPE));
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), actual.getStatus());
+	}
+	
+	@Test
+	public void testCreateUserPasswordNull404Expected() {
+		UserInformation user = new UserInformation();
+		user.username = "Giorgi";
+		user.password = null;
+		user.email = "giorgi@freeuni.edu.ge";
+        Response actual = target("/login/users").request().post(Entity.entity(user, MediaType.APPLICATION_JSON_TYPE));
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), actual.getStatus());
+	}
+	
+	@Test
+	public void testCreateUserNameNull404Expected() {
+		UserInformation user = new UserInformation();
+		user.username = null;
+		user.password = "blabla";
+		user.email = "giorgi@freeuni.edu.ge";
+        Response actual = target("/login/users").request().post(Entity.entity(user, MediaType.APPLICATION_JSON_TYPE));
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), actual.getStatus());
+	}
+	
 	@Test
 	public void testGetUserRegistered() {
 		LoginService loginService = new LoginService();
@@ -151,5 +224,18 @@ public class LoginServiceTest {
 		userInfo = loginService.getUser("Giorgi");
 		assertEquals(userInfo, null);
 	}
+	
+	@Test
+	public void testGetUserRegistered200Expected(){
+		Response actual = target("/login/users/anna").request().get();
+		assertEquals(Response.Status.OK.getStatusCode(), actual.getStatus());
+	}
+	
+	@Test
+	public void testGetUserNotRegistered404Expected(){
+		Response actual = target("/login/users/giorgi").request().get();
+		assertEquals(Response.Status.NOT_FOUND.getStatusCode(), actual.getStatus());
+	}
+	
 
 }
