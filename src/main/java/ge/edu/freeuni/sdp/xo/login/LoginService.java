@@ -6,6 +6,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import javax.ws.rs.core.Response.Status;
 
+import com.microsoft.azure.storage.StorageException;
+
 @Path("/login")
 @Consumes( { MediaType.APPLICATION_JSON})
 @Produces( { MediaType.APPLICATION_JSON})
@@ -13,6 +15,15 @@ public class LoginService {
 
 	private FakeKVStore getStore() {
 		return new FakeKVStore();
+	}
+	
+	private UsersCloud getUsersCloud(){
+		try {
+			return CloudFactory.create("users");
+		} catch (StorageException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@PUT
