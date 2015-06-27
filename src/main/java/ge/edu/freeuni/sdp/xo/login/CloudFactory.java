@@ -20,7 +20,7 @@ public class CloudFactory {
 		// table = "users" anu users ewera table-is magivrad
 		
 		
-		// es string shesacvlelia
+		// es string gasarkvevia
 		final String storageConnectionString = "DefaultEndpointsProtocol=http;"
 				+ "AccountName=freeunisdptodo;" 
 				+ "AccountKey=+UKHsHFQUWDjoHT1S7q4Ivc1phivLmXwWESvpcRCCJwhs1BnShkaFOOQs+BmI4XWtNnyg78S6ovbD2J5QCKxsQ==";

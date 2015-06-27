@@ -17,13 +17,8 @@ public class LoginService {
 		return new FakeKVStore();
 	}
 	
-	private UsersCloud getUsersCloud(){
-		try {
-			return CloudFactory.create("users");
-		} catch (StorageException e) {
-			e.printStackTrace();
-			return null;
-		}
+	private UsersCloud getUsersCloud() throws StorageException{
+		return CloudFactory.create("users");
 	}
 
 	@PUT

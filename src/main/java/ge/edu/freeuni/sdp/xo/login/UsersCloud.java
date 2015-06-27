@@ -13,8 +13,8 @@ public class UsersCloud {
 	}
 	
 	public void addUser(UserInformation userInfo){
-		UserInformationEntity user = new UserInformationEntity(userInfo.username, userInfo.password);
-		user.setEmail(userInfo.email);
+		UserInformationEntity user = new UserInformationEntity(userInfo.email, userInfo.username);
+		user.setPassword(userInfo.password);
 		TableOperation insertUser = TableOperation.insertOrReplace(user);
 		try {
 			table.execute(insertUser);
