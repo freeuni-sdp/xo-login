@@ -14,6 +14,11 @@ public class CloudFactory {
 	public static UsersCloud create(String table) throws StorageException{
 		return new UsersCloud(getTable(table));
 	}
+	
+	//es droebit
+	public static TokensCloud create1(String table) throws StorageException{
+		return new TokensCloud(getTable(table));
+	}
 
 	private static CloudTable getTable(String table) throws StorageException {
 

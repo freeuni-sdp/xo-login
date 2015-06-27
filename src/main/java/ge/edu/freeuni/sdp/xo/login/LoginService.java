@@ -20,31 +20,34 @@ public class LoginService {
 	private UsersCloud getUsersCloud() throws StorageException{
 		return CloudFactory.create("xologinusers");
 	}
+	
+	private TokensCloud getTokensCloud() throws StorageException{
+		return CloudFactory.create1("xologintokens");
+	}
 
 	@PUT
-	public Token loginUser(LoginInformation userInfo){
+	public Token loginUser(LoginInformation userInfo) throws StorageException{
 		if(userInfo.password == null || userInfo.username == null){
 			throw new WebApplicationException(Status.BAD_REQUEST);
 		}
-
-		if (!correctCredentials(userInfo)) {
+		UserInformation currentUser = getUsersCloud().findUser(userInfo.username);
+		if (currentUser == null || !currentUser.password.equals(userInfo.password)){
 			throw new WebApplicationException(422);
 		}
 		final String uniqueToken = UUID.randomUUID().toString();
 		Token newToken = new Token(uniqueToken);
-		setToken(userInfo, newToken);
-
+		getTokensCloud().addOrUpdateUserToken(userInfo, newToken);
 		return newToken;
 	}
 
 	@GET @Path("/{token}")
-	public UserName getUserByToken(@PathParam("token") String token){
-		UserInformation userInfo = getStore().getByToken(token);
-		if (userInfo == null) {
+	public UserName getUserByToken(@PathParam("token") String token) throws StorageException{
+		String username = getTokensCloud().findUser(token);
+		if (username == null) {
 			throw new WebApplicationException(Status.NOT_FOUND);
 		}
 		UserName currentUser = new UserName();
-		currentUser.username = userInfo.username;
+		currentUser.username = username;
 		return currentUser;
 	}
 

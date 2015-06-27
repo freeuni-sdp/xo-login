@@ -61,112 +61,112 @@ public class LoginServiceTest extends JerseyTest{
 		
 	}
 	
-	@Test
-	public void testLoginRegisteredUser() {
-		LoginInformation loginInfo = new LoginInformation();
-		loginInfo.username = "sandro";
-		loginInfo.password = "blabla";
+//	@Test
+//	public void testLoginRegisteredUser() {
+//		LoginInformation loginInfo = new LoginInformation();
+//		loginInfo.username = "sandro";
+//		loginInfo.password = "blabla";
+//
+//		Token actualToken = target("/login").request().put(Entity.entity(loginInfo, MediaType.APPLICATION_JSON_TYPE)).readEntity(Token.class);;
+//		assertFalse(actualToken.token.isEmpty());
+//	}
+//	
+//	@Test
+//	public void testLoginRegisteredUser200Expected() {
+//		LoginInformation loginInfo = new LoginInformation();
+//		loginInfo.username = "sandro";
+//		loginInfo.password = "blabla";
+//		Response actual = target("/login").request().put(Entity.entity(loginInfo, MediaType.APPLICATION_JSON_TYPE));
+//        assertEquals(Response.Status.OK.getStatusCode(), actual.getStatus());
+//	}
+//	
+//	@Test
+//	public void testLoginNotRegisteredUser422Expected() {
+//		LoginInformation loginInfo = new LoginInformation();
+//		loginInfo.username = "giorgi";
+//		loginInfo.password = "blabla";
+//		Response actual = target("/login").request().put(Entity.entity(loginInfo, MediaType.APPLICATION_JSON_TYPE));
+//        assertEquals(422, actual.getStatus());
+//	}
+//	
+//	@Test
+//	public void testLoginUser400Expected() {
+//		LoginInformation loginInfo = new LoginInformation();
+//		loginInfo.username = "giorgi";
+//		loginInfo.password = null;
+//		Response actual = target("/login").request().put(Entity.entity(loginInfo, MediaType.APPLICATION_JSON_TYPE));
+//        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), actual.getStatus());
+//	}
 
-		Token actualToken = target("/login").request().put(Entity.entity(loginInfo, MediaType.APPLICATION_JSON_TYPE)).readEntity(Token.class);;
-		assertFalse(actualToken.token.isEmpty());
-	}
-	
-	@Test
-	public void testLoginRegisteredUser200Expected() {
-		LoginInformation loginInfo = new LoginInformation();
-		loginInfo.username = "sandro";
-		loginInfo.password = "blabla";
-		Response actual = target("/login").request().put(Entity.entity(loginInfo, MediaType.APPLICATION_JSON_TYPE));
-        assertEquals(Response.Status.OK.getStatusCode(), actual.getStatus());
-	}
-	
-	@Test
-	public void testLoginNotRegisteredUser422Expected() {
-		LoginInformation loginInfo = new LoginInformation();
-		loginInfo.username = "giorgi";
-		loginInfo.password = "blabla";
-		Response actual = target("/login").request().put(Entity.entity(loginInfo, MediaType.APPLICATION_JSON_TYPE));
-        assertEquals(422, actual.getStatus());
-	}
-	
-	@Test
-	public void testLoginUser400Expected() {
-		LoginInformation loginInfo = new LoginInformation();
-		loginInfo.username = "giorgi";
-		loginInfo.password = null;
-		Response actual = target("/login").request().put(Entity.entity(loginInfo, MediaType.APPLICATION_JSON_TYPE));
-        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), actual.getStatus());
-	}
+//	@Test(expected=WebApplicationException.class)
+//	public void testLoginUserPasswordNull() {
+//		LoginService loginService = new LoginService();
+//		LoginInformation userInfo = Mockito.mock(LoginInformation.class);
+//		userInfo.username = "sandro";
+//		userInfo.password = null;
+//		Token token = Mockito.mock(Token.class);
+//		token = loginService.loginUser(userInfo);
+//		assertEquals(token, null);
+//	}
+//
+//	@Test(expected=WebApplicationException.class)
+//	public void testLoginUserUsernameNull() {
+//		LoginService loginService = new LoginService();
+//		LoginInformation userInfo = Mockito.mock(LoginInformation.class);
+//		userInfo.username = null;
+//		userInfo.password = "blabla";
+//		Token token = Mockito.mock(Token.class);
+//		token = loginService.loginUser(userInfo);
+//		assertEquals(token, null);
+//	}
+//
+//	@Test(expected=WebApplicationException.class)
+//	public void testLoginUserPasswordIncorrect() {
+//		LoginService loginService = new LoginService();
+//		LoginInformation userInfo = Mockito.mock(LoginInformation.class);
+//		userInfo.username = "sandro";
+//		userInfo.password = "blublu";
+//		Token token = Mockito.mock(Token.class);
+//		token = loginService.loginUser(userInfo);
+//		assertEquals(token, null);
+//	}
+//
+//	@Test(expected=WebApplicationException.class)
+//	public void testLoginUserUsernameIncorrect() {
+//		LoginService loginService = new LoginService();
+//		LoginInformation userInfo = Mockito.mock(LoginInformation.class);
+//		userInfo.username = "sandro1";
+//		userInfo.password = "blublu";
+//		Token token = Mockito.mock(Token.class);
+//		token = loginService.loginUser(userInfo);
+//		assertEquals(token, null);
+//	}
 
-	@Test(expected=WebApplicationException.class)
-	public void testLoginUserPasswordNull() {
-		LoginService loginService = new LoginService();
-		LoginInformation userInfo = Mockito.mock(LoginInformation.class);
-		userInfo.username = "sandro";
-		userInfo.password = null;
-		Token token = Mockito.mock(Token.class);
-		token = loginService.loginUser(userInfo);
-		assertEquals(token, null);
-	}
+//	@Test
+//	public void testGetUserByTokenRegistered() {
+//		UserName userName = target("/login/00000").request().get().readEntity(UserName.class);;
+//		assertEquals(userName.username, "sandro");
+//	}
+//	
+//	@Test
+//	public void testGetUserByToken200Expected() {
+//		Response actual = target("/login/00000").request().get();
+//		assertEquals(Response.Status.OK.getStatusCode(), actual.getStatus());
+//	}
+//	
+//	@Test
+//	public void testGetUserByToken404Expected() {
+//		Response actual = target("/login/00001").request().get();
+//		assertEquals(Response.Status.NOT_FOUND.getStatusCode(), actual.getStatus());
+//	}
 
-	@Test(expected=WebApplicationException.class)
-	public void testLoginUserUsernameNull() {
-		LoginService loginService = new LoginService();
-		LoginInformation userInfo = Mockito.mock(LoginInformation.class);
-		userInfo.username = null;
-		userInfo.password = "blabla";
-		Token token = Mockito.mock(Token.class);
-		token = loginService.loginUser(userInfo);
-		assertEquals(token, null);
-	}
-
-	@Test(expected=WebApplicationException.class)
-	public void testLoginUserPasswordIncorrect() {
-		LoginService loginService = new LoginService();
-		LoginInformation userInfo = Mockito.mock(LoginInformation.class);
-		userInfo.username = "sandro";
-		userInfo.password = "blublu";
-		Token token = Mockito.mock(Token.class);
-		token = loginService.loginUser(userInfo);
-		assertEquals(token, null);
-	}
-
-	@Test(expected=WebApplicationException.class)
-	public void testLoginUserUsernameIncorrect() {
-		LoginService loginService = new LoginService();
-		LoginInformation userInfo = Mockito.mock(LoginInformation.class);
-		userInfo.username = "sandro1";
-		userInfo.password = "blublu";
-		Token token = Mockito.mock(Token.class);
-		token = loginService.loginUser(userInfo);
-		assertEquals(token, null);
-	}
-
-	@Test
-	public void testGetUserByTokenRegistered() {
-		UserName userName = target("/login/00000").request().get().readEntity(UserName.class);;
-		assertEquals(userName.username, "sandro");
-	}
-	
-	@Test
-	public void testGetUserByToken200Expected() {
-		Response actual = target("/login/00000").request().get();
-		assertEquals(Response.Status.OK.getStatusCode(), actual.getStatus());
-	}
-	
-	@Test
-	public void testGetUserByToken404Expected() {
-		Response actual = target("/login/00001").request().get();
-		assertEquals(Response.Status.NOT_FOUND.getStatusCode(), actual.getStatus());
-	}
-
-	@Test(expected=WebApplicationException.class)
-	public void testGetUserByTokenNotRegistered() {
-		LoginService loginService = new LoginService();
-		UserName userName = Mockito.mock(UserName.class);
-		userName = loginService.getUserByToken("00001");
-		assertEquals(userName, null);
-	}
+//	@Test(expected=WebApplicationException.class)
+//	public void testGetUserByTokenNotRegistered() {
+//		LoginService loginService = new LoginService();
+//		UserName userName = Mockito.mock(UserName.class);
+//		userName = loginService.getUserByToken("00001");
+//		assertEquals(userName, null);
+//	}
 
 //	@Test
 //	public void testCreateUser() {
