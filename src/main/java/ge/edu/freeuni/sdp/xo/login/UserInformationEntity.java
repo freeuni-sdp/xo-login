@@ -4,12 +4,15 @@ import com.microsoft.azure.storage.table.TableServiceEntity;
 
 public class UserInformationEntity extends TableServiceEntity{
 
-	String password;
+	private String password;
+	
 	
 	public UserInformationEntity(String email,String username){
 		this.partitionKey = email;
 		this.rowKey = username;
 	}
+	
+	public UserInformationEntity(){}
 	
 	public void setPassword(String password){
 		this.password = password;

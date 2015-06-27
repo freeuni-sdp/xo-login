@@ -18,7 +18,7 @@ public class LoginService {
 	}
 	
 	private UsersCloud getUsersCloud() throws StorageException{
-		return CloudFactory.create("users");
+		return CloudFactory.create("xologinusers");
 	}
 
 	@PUT
@@ -50,23 +50,28 @@ public class LoginService {
 
 
 	@POST @Path("/users")
-	public Response createUser(UserInformation user){
+	public Response createUser(UserInformation user) throws StorageException{
 		if(user.email == null || user.password == null || user.username == null){
 			return Response.status(Status.BAD_REQUEST).build();
+		}
+		boolean checker = getUsersCloud().addUser(user);
+		if(!checker){
+			return Response.status(Status.CONFLICT).build();
 		}
 		return Response.status(Status.CREATED).build();
 	}
 
 
 	@GET @Path("/users/{username}")
-	public UserInformation getUser(@PathParam("username") String userName){
-		UserInformation currentUser = getStore().getByName(userName);
+	public UserInformation getUser(@PathParam("username") String userName) throws StorageException{
+		UserInformation currentUser = getUsersCloud().findUser(userName);
 		if (currentUser == null){
 			throw new WebApplicationException(Status.NOT_FOUND);
 		}
 		return currentUser;
 	}
 
+	// this method was needed for fake implementation
 	private boolean correctCredentials(LoginInformation loginInfo) {
 		UserInformation userInfo = getStore().getByName(loginInfo.username);
 		if (userInfo == null) {
@@ -75,6 +80,7 @@ public class LoginService {
 		return userInfo.password.equals(loginInfo.password);
 	}
 
+	// this method was needed for fake implementation
 	private void setToken(LoginInformation loginInfo, Token token) {
 		UserInformation userInfo = getStore().getByName(loginInfo.username);
 		getStore().putByToken(token.token, userInfo);
