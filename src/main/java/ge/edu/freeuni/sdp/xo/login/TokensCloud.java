@@ -46,7 +46,6 @@ public class TokensCloud {
 	public String findUser(String token){
 		TableQuery<LoginInformationEntity> query = TableQuery.from(LoginInformationEntity.class);
 		for (LoginInformationEntity entity : table.execute(query)) {
-			TableOperation insertUser = TableOperation.delete(entity);
 			System.out.println(entity.getRowKey() + "\t" + entity.getPartitionKey() 
 					+ "\t" + entity.getToken());
 //	        if(entity.getToken().equals(token)){
