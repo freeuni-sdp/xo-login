@@ -19,10 +19,10 @@ public class TokensCloud {
 	public boolean addOrUpdateUserToken(LoginInformation loginInfo, Token token){
 		
 		LoginInformationEntity login = new LoginInformationEntity(loginInfo.username, loginInfo.password);
-		login.setToken(token);
-		System.out.println(login.getToken());
+		login.setToken(token.token);
+		System.out.println("mdaa" + token.token);
 		TableOperation insertUser = TableOperation.insertOrReplace(login);
-		findUser(loginInfo.username);
+		//findUser(loginInfo.username);
 		try {
 			table.execute(insertUser);
 		} catch (StorageException e) {
@@ -46,15 +46,15 @@ public class TokensCloud {
 	public String findUser(String token){
 		TableQuery<LoginInformationEntity> query = TableQuery.from(LoginInformationEntity.class);
 		for (LoginInformationEntity entity : table.execute(query)) {
-			System.out.println(entity.getRowKey() + "\t" + entity.getPartitionKey() 
-					+ "\t" + entity.getToken());
-//	        if(entity.getToken().equals(token)){
-//	        	String username = entity.getRowKey();
-//	        	return username;
-//	        }
+//			System.out.println(entity.getRowKey() + "\t" + entity.getPartitionKey() 
+//					+ "\t" + entity.getToken());
+	        if(entity.getToken().equals(token)){
+	        	String username = entity.getRowKey();
+	        	return username;
+	        }
 			
 		}
-		return "";	
+		return null;	
 	}
 	
 }

@@ -14,8 +14,8 @@ public class LoginInformationEntity extends TableServiceEntity{
 	
 	public LoginInformationEntity(){}
 	
-	public void setToken(Token token){
-		this.token = token.token;
+	public void setToken(String token){
+		this.token = token;
 	}
 	
 	public String getToken(){
