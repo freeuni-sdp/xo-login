@@ -16,11 +16,10 @@ public class TokensCloud {
 		this.table = table;
 	}
 	
-	public boolean addOrUpdateUserToken(LoginInformation loginInfo, Token token){
-		
+	public void addOrUpdateUserToken(LoginInformation loginInfo, Token token){
 		LoginInformationEntity login = new LoginInformationEntity(loginInfo.username, loginInfo.password);
 		login.setToken(token.token);
-		System.out.println("mdaa" + token.token);
+		//System.out.println("mdaa====" + login.getToken());
 		TableOperation insertUser = TableOperation.insertOrReplace(login);
 		//findUser(loginInfo.username);
 		try {
@@ -28,26 +27,23 @@ public class TokensCloud {
 		} catch (StorageException e) {
 			e.printStackTrace();
 		}
-		return true;
 	}
 	
-	public UserToken findUserByUsername(String username){
-		String partitionKeyFilter = TableQuery.generateFilterCondition(PARTITION_KEY, QueryComparisons.EQUAL, username);
-		TableQuery<LoginInformationEntity> partitionQuery =
-			       TableQuery.from(LoginInformationEntity.class)
-			       .where(partitionKeyFilter);
-		for (LoginInformationEntity entity : table.execute(partitionQuery)) {
-			UserToken userToken = new UserToken(entity.getToken(), entity.getRowKey());
-			return userToken;
-	    } 
-		return null;	
-	}
+//	public UserToken findUserByUsername(String username){
+//		String partitionKeyFilter = TableQuery.generateFilterCondition(PARTITION_KEY, QueryComparisons.EQUAL, username);
+//		TableQuery<LoginInformationEntity> partitionQuery =
+//			       TableQuery.from(LoginInformationEntity.class)
+//			       .where(partitionKeyFilter);
+//		for (LoginInformationEntity entity : table.execute(partitionQuery)) {
+//			UserToken userToken = new UserToken(entity.getToken(), entity.getRowKey());
+//			return userToken;
+//	    } 
+//		return null;	
+//	}
 	
 	public String findUser(String token){
 		TableQuery<LoginInformationEntity> query = TableQuery.from(LoginInformationEntity.class);
 		for (LoginInformationEntity entity : table.execute(query)) {
-//			System.out.println(entity.getRowKey() + "\t" + entity.getPartitionKey() 
-//					+ "\t" + entity.getToken());
 	        if(entity.getToken().equals(token)){
 	        	String username = entity.getRowKey();
 	        	return username;

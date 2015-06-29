@@ -29,12 +29,12 @@ public class LoginServiceTest extends JerseyTest{
 	
 	@Test
 	public void testUsers() throws StorageException{
-		LoginService login = new LoginService();
+	//	LoginService login = new LoginService();
 		
-		LoginInformation userInfo = new LoginInformation();
-		userInfo.username = "ana";
-		userInfo.password = "ana";
-		Token token = login.loginUser(userInfo);
+	//	LoginInformation userInfo = new LoginInformation();
+	//	userInfo.username = "ana";
+	//	userInfo.password = "ana";
+	//	Token token = login.loginUser(userInfo);
 //		System.out.println(token.token);
 //		
 //		System.out.println(login.getUserByToken(token.token).username);
@@ -69,6 +69,8 @@ public class LoginServiceTest extends JerseyTest{
 		
 		
 	}
+	
+	
 	
 //	@Test
 //	public void testLoginRegisteredUser() {

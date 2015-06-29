@@ -10,22 +10,16 @@ import com.microsoft.azure.storage.table.CloudTableClient;
 
 public class CloudFactory {
 
-	// table is saxeli an "users" an kide loginis tables ra saxelic erkmeva
 	public static UsersCloud createUsersCloud() throws StorageException{
 		return new UsersCloud(getTable("xologinusers"));
 	}
 	
-	//es droebit
 	public static TokensCloud createTokensCloud() throws StorageException{
 		return new TokensCloud(getTable("xologintokens"));
 	}
 
 	private static CloudTable getTable(String table) throws StorageException {
 
-		// table = "users" anu users ewera table-is magivrad
-		
-		
-		// es string gasarkvevia
 		final String storageConnectionString = "DefaultEndpointsProtocol=http;"
 				+ "AccountName=freeunisdptodo;" 
 				+ "AccountKey=+UKHsHFQUWDjoHT1S7q4Ivc1phivLmXwWESvpcRCCJwhs1BnShkaFOOQs+BmI4XWtNnyg78S6ovbD2J5QCKxsQ==";
