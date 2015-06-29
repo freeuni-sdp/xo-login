@@ -4,11 +4,22 @@ import com.microsoft.azure.storage.table.TableServiceEntity;
 
 public class LoginInformationEntity extends TableServiceEntity{
 	
-	public LoginInformationEntity(String username,String token){
-		this.partitionKey = username;
-		this.rowKey = token;
+	private String token;
+	
+	
+	public LoginInformationEntity(String username, String password){
+		this.partitionKey = password;
+		this.rowKey = username;
 	}
 	
 	public LoginInformationEntity(){}
+	
+	public void setToken(Token token){
+		this.token = token.token;
+	}
+	
+	public String getToken(){
+		return this.token;
+	}
 	
 }

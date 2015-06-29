@@ -35,16 +35,16 @@ public class LoginServiceTest extends JerseyTest{
 		userInfo.username = "ana";
 		userInfo.password = "ana";
 		Token token = login.loginUser(userInfo);
-		System.out.println(token.token);
-		
-		System.out.println(login.getUserByToken(token.token).username);
-		
-		Token token1 = login.loginUser(userInfo);
-		System.out.println(token1.token);
-		
-		System.out.println(login.getUserByToken(token1.token).username);
-		
-		System.out.println(login.getUserByToken(token.token).username);
+//		System.out.println(token.token);
+//		
+//		System.out.println(login.getUserByToken(token.token).username);
+//		
+//		Token token1 = login.loginUser(userInfo);
+//		System.out.println(token1.token);
+//		
+//		System.out.println(login.getUserByToken(token1.token).username);
+//		
+//		System.out.println(login.getUserByToken(token.token).username);
 		
 //		try {
 //			login.createUser(user);
