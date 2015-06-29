@@ -11,13 +11,13 @@ import com.microsoft.azure.storage.table.CloudTableClient;
 public class CloudFactory {
 
 	// table is saxeli an "users" an kide loginis tables ra saxelic erkmeva
-	public static UsersCloud create(String table) throws StorageException{
-		return new UsersCloud(getTable(table));
+	public static UsersCloud createUsersCloud() throws StorageException{
+		return new UsersCloud(getTable("xologinusers"));
 	}
 	
 	//es droebit
-	public static TokensCloud create1(String table) throws StorageException{
-		return new TokensCloud(getTable(table));
+	public static TokensCloud createTokensCloud() throws StorageException{
+		return new TokensCloud(getTable("xologintokens"));
 	}
 
 	private static CloudTable getTable(String table) throws StorageException {

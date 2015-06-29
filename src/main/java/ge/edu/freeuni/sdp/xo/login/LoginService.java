@@ -18,11 +18,11 @@ public class LoginService {
 	}
 	
 	private UsersCloud getUsersCloud() throws StorageException{
-		return CloudFactory.create("xologinusers");
+		return CloudFactory.createUsersCloud();
 	}
 	
 	private TokensCloud getTokensCloud() throws StorageException{
-		return CloudFactory.create1("xologintokens");
+		return CloudFactory.createTokensCloud();
 	}
 
 	@PUT

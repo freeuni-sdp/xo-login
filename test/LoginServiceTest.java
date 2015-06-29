@@ -28,15 +28,24 @@ public class LoginServiceTest extends JerseyTest{
 	
 	
 	@Test
-	public void testUsers(){
-//		LoginService login = new LoginService();
-//		
-//		
-//		UserInformation user = new UserInformation();
-//		user.email = "slezh12@freeuni.edu.ge";
-//		user.password = "sandro";
-//		user.username = "sandro";
-//		
+	public void testUsers() throws StorageException{
+		LoginService login = new LoginService();
+		
+		LoginInformation userInfo = new LoginInformation();
+		userInfo.username = "ana";
+		userInfo.password = "ana";
+		Token token = login.loginUser(userInfo);
+		System.out.println(token.token);
+		
+		System.out.println(login.getUserByToken(token.token).username);
+		
+		Token token1 = login.loginUser(userInfo);
+		System.out.println(token1.token);
+		
+		System.out.println(login.getUserByToken(token1.token).username);
+		
+		System.out.println(login.getUserByToken(token.token).username);
+		
 //		try {
 //			login.createUser(user);
 //			System.out.println("jigrulad chaiaraa");
